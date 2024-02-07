@@ -1,0 +1,71 @@
+Langkah-langkah pembuatan penjalanan aplikasi Backend P3 Ujikom Rpl 
+
+1. Install Database PostgreSQL di Laptop masing-masing
+
+2. jalankan script npm i yarn --global
+
+3. jalankan yarn 
+
+4. Jalankan script dibawah satu satu untuk membuat semua table di database 
+
+
+--Table m_user
+CREATE TABLE public.m_user (
+	userid serial4 NOT NULL,
+	username varchar(255) NULL,
+	"password" varchar(255) NULL,
+	email varchar(255) NULL,
+	namalengkap varchar(255) NULL,
+	alamat text NULL,
+	CONSTRAINT m_user_pkey PRIMARY KEY (userid)
+);
+
+--Table likefoto
+CREATE TABLE public.likefoto (
+	likeid serial4 NOT NULL,
+	fotoid int4 NULL,
+	userid int4 NULL,
+	tanggal_like date NULL,
+	CONSTRAINT likefoto_pkey PRIMARY KEY (likeid),
+	CONSTRAINT constraint_fotoid FOREIGN KEY (fotoid) REFERENCES public.foto(fotoid),
+	CONSTRAINT constraint_likefoto FOREIGN KEY (userid) REFERENCES public.m_user(userid)
+);
+
+--Table komentarfoto
+CREATE TABLE public.komentarfoto (
+	komentarid serial4 NOT NULL,
+	fotoid int4 NULL,
+	userid int4 NULL,
+	isikomentar text NULL,
+	tanggalkomentar date NULL,
+	CONSTRAINT komentarfoto_pkey PRIMARY KEY (komentarid),
+	CONSTRAINT constraint_komentarfoto FOREIGN KEY (userid) REFERENCES public.m_user(userid)
+);
+
+--Table foto
+CREATE TABLE public.foto (
+	fotoid serial4 NOT NULL,
+	judulfoto varchar(255) NULL,
+	deskripsifoto text NULL,
+	tanggal_unggah date NULL,
+	lokasi_file varchar(255) NULL,
+	albumid int4 NULL,
+	userid int4 NULL,
+	CONSTRAINT foto_pkey PRIMARY KEY (fotoid),
+	CONSTRAINT constraint_albumid FOREIGN KEY (albumid) REFERENCES public.album(albumid),
+	CONSTRAINT constraint_foto FOREIGN KEY (userid) REFERENCES public.m_user(userid)
+);
+
+--Table album
+CREATE TABLE public.album (
+	albumid serial4 NOT NULL,
+	namaalbum varchar(255) NOT NULL,
+	deskripsi text NULL,
+	tanggaldibuat date NULL,
+	userid int4 NULL,
+	CONSTRAINT album_namaalbum_key UNIQUE (namaalbum),
+	CONSTRAINT album_pkey PRIMARY KEY (albumid),
+	CONSTRAINT constraint_album FOREIGN KEY (userid) REFERENCES public.m_user(userid)
+);
+
+5. ketik perintah yarn start untuk memulai aplikasi Backend Kita
