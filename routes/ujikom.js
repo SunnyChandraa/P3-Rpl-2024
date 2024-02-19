@@ -6,5 +6,6 @@ const router = express.Router();
 
 // READ - GET
 router.get('/', UserController.getAllUsers);
+router.get('/get-all-photo', UserController.getPhoto);
 
 module.exports = router;
